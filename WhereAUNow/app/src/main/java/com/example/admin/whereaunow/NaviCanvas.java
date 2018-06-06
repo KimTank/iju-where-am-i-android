@@ -1,9 +1,13 @@
 package com.example.admin.whereaunow;
 
 import android.content.Context;
+import android.content.SyncStatusObserver;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Point;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -15,24 +19,41 @@ import com.example.admin.whereaunow.Grid2d;
 import com.example.admin.whereaunow.Grid2d.MapNode;
 
 import java.util.ArrayList;
+import java.util.logging.Handler;
 
 class NaviCanvas extends View {
-    int userPosX, userPosY;
+    int sX, sY, gX, gY;
 
-    public int getUserPosX() {
-        return userPosX;
+    public int getsX() {
+        return sX;
     }
 
-    public void setUserPosX(int userPosX) {
-        this.userPosX = userPosX;
+    public void setsX(int sX) {
+        this.sX = sX;
     }
 
-    public int getUserPosY() {
-        return userPosY;
+    public int getsY() {
+        return sY;
     }
 
-    public void setUserPosY(int userPosY) {
-        this.userPosY = userPosY;
+    public void setsY(int sY) {
+        this.sY = sY;
+    }
+
+    public int getgX() {
+        return gX;
+    }
+
+    public void setgX(int gX) {
+        this.gX = gX;
+    }
+
+    public int getgY() {
+        return gY;
+    }
+
+    public void setgY(int gY) {
+        this.gY = gY;
     }
 
     public NaviCanvas(Context context) {
@@ -58,15 +79,16 @@ class NaviCanvas extends View {
         //블럭나누는 설정
         paintLine.setStrokeWidth(10);
         paintLine.setColor(Color.BLACK);
-        //마커 설정
-        paintMarker.setStrokeWidth(10);
-        paintMarker.setColor(Color.RED);
+        //전체길 설정
+        paintMarker.setStrokeWidth(20);
+        paintMarker.setColor(Color.BLUE);
         //벽 설정
         paintWall.setStrokeWidth(Color.BLACK);
         paintWall.setStrokeWidth(5);
-        //길 설정
+        //길그리는 설정
         paintRoad.setStrokeWidth(20);
-        paintRoad.setColor(Color.BLUE);
+        paintRoad.setStyle(Paint.Style.STROKE);
+        paintRoad.setColor(Color.RED);
         //x,y좌표값 기본설정
         int xmin = 0;
         int ymin = 0;
@@ -111,17 +133,20 @@ class NaviCanvas extends View {
 
         Grid2d map2d = new Grid2d(map, false);
         //최소거리 뽑는거 logcat으로 확인
-        Log.d(TAG, "onDraw: " + map2d.findPath(1, 2, 10, 11));
+        //Log.d(TAG, "onDraw: " + map2d.findPath(1, 2, 10, 11));
         //findPath(출발지x,출발지y, 도착지x,도착지y);
-        List<MapNode> ar = map2d.findPath(10, 2, 1, 13);
+        List<MapNode> ar = map2d.findPath(getsX(), getsY(), getgX(), getgY());
+        Log.d(TAG, "onDraw: "+getsX()+" "+getsY()+" "+getgX()+" "+getgY());
 
         //출발지에서 도착지로가는 최소의 거리를 구하여 맵위에 표시하기 위하여 숫자만 도출함
         //경유하는 길은 3으로 변경시킴
+
+        //0과 3, 1로 나눠서 제어할떄 필요함
         for (int i = 0; i < ar.size(); i++) {
             String s = ar.get(i).toString();
             String[] split = s.split(",");
             split[1] = split[1].trim();
-            System.out.println(split[0] + split[1]);
+            //째진거확인 System.out.println(split[0] + split[1]);
             map[Integer.parseInt(split[1].substring(0, split[1].length() - 1))][Integer.parseInt(split[0].substring(1, split[0].length()))] = 1;
         }
         /*자바용 변환 확인 출력코드
@@ -151,5 +176,27 @@ class NaviCanvas extends View {
                 }
             }
         }
+        int xmarker = xmax * getsX() / xlength + xmax / xlength / 2;
+        int ymarker = ymax *getsY() / ylength + ymax / ylength / 2;
+        int oldX=xmarker;
+        int oldY=ymarker;
+        Log.d(TAG,  getsY()+ " " + getsX()  +" "+ oldX + ", " + oldY+"");
+        //drawLine으로 각 지점 이어줌
+        for (int i = 0; i < ar.size(); i++) {
+            String s = ar.get(i).toString();
+            String[] split = s.split(",");
+            split[1] = split[1].trim();
+            int preX = Integer.parseInt(split[0].substring(1, split[0].length()));
+            int preY = Integer.parseInt(split[1].substring(0, split[1].length() - 1));
+            Log.d(TAG, "onDraw: " + preX + ", " + preY);
+            xmarker = xmax * preX / xlength + xmax / xlength / 2;
+            ymarker = ymax * preY / ylength + ymax / ylength / 2;
+            Log.d(TAG,  oldX + ", " + oldY + "onDraw: " + xmarker + ", " + ymarker);
+
+            canvas.drawLine(oldX,oldY,xmarker,ymarker,paintRoad);
+            oldX = xmarker;
+            oldY = ymarker;
+        }
+        //--------------------각초당으로 제어해서 초록색 움직이게해보자
     }
 }
