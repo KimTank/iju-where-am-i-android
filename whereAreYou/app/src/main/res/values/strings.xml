@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">whereAreYou</string>
+    <string name="index_where">지금</string>
+    <string name="index_areu">어디고</string>
 </resources>

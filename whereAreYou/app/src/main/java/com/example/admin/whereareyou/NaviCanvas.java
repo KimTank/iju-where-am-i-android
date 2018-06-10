@@ -60,6 +60,7 @@ class NaviCanvas extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         String TAG = "tiger";
+
         //테스트용 paint 정의
         Paint paintLine = new Paint();//블럭나눔
         Paint paintMarker = new Paint();//마커
@@ -75,9 +76,14 @@ class NaviCanvas extends View {
         paintWall.setStrokeWidth(Color.BLACK);
         paintWall.setStrokeWidth(5);
         //길그리는 설정
-        paintRoad.setStrokeWidth(20);
+        paintRoad.setStrokeWidth(40);
         paintRoad.setStyle(Paint.Style.STROKE);
         paintRoad.setColor(Color.RED);
+        paintRoad.setStrokeJoin(Paint.Join.ROUND);
+        paintRoad.setStrokeCap(Paint.Cap.ROUND);
+        paintRoad.setStrokeMiter(45.0f);
+        paintRoad.setAntiAlias(true);
+        paintRoad.setStyle(Paint.Style.STROKE);
         //x,y좌표값 기본설정
         int xmin = 0;
         int ymin = 0;
@@ -165,23 +171,27 @@ class NaviCanvas extends View {
                 }
             }
         }
+        //x와 y값을 조정하여 각 네모에 중앙 찾아주는 변수
         int xmarker = xmax * getsX() / xlength + xmax / xlength / 2;
         int ymarker = ymax *getsY() / ylength + ymax / ylength / 2;
+        //지나온 x좌표 y좌표를 대입 저장
         int oldX=xmarker;
         int oldY=ymarker;
-        Log.d(TAG,  getsY()+ " " + getsX()  +" "+ oldX + ", " + oldY+"");
-        //drawLine으로 각 지점 이어줌
+        //Log.d(TAG,  getsY()+ " " + getsX()  +" "+ oldX + ", " + oldY+"");
+        //drawLine으로 경로 그려주는 곳
         for (int i = 0; i < ar.size(); i++) {
+            //A*알고리즘 결과값을 대입시키기 위해서 subString으로 제어
             String s = ar.get(i).toString();
             String[] split = s.split(",");
             split[1] = split[1].trim();
             int preX = Integer.parseInt(split[0].substring(1, split[0].length()));
             int preY = Integer.parseInt(split[1].substring(0, split[1].length() - 1));
-            Log.d(TAG, "onDraw: " + preX + ", " + preY);
+            //Log.d(TAG, "onDraw: " + preX + ", " + preY);
+            //A*알고리즘으로 불러온 값의 x, y좌표를 구함
             xmarker = xmax * preX / xlength + xmax / xlength / 2;
             ymarker = ymax * preY / ylength + ymax / ylength / 2;
-            Log.d(TAG,  oldX + ", " + oldY + "onDraw: " + xmarker + ", " + ymarker);
-
+            //Log.d(TAG,  oldX + ", " + oldY + "onDraw: " + xmarker + ", " + ymarker);
+            //각 지점을 구좌표 앞으로 이동한 값으로 x, y값 이어줌
             canvas.drawLine(oldX,oldY,xmarker,ymarker,paintRoad);
             oldX = xmarker;
             oldY = ymarker;
