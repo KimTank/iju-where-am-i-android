@@ -28,13 +28,13 @@
         <activity android:name=".MainActivity"
             android:theme="@style/AppTheme">
         </activity>
-        <activity android:name=".QrcreateActivity"
+        <activity android:name=".barcode.QrcreateActivity"
             android:theme="@style/AppTheme">
         </activity>
-        <activity android:name=".GoodsActivity"
+        <activity android:name=".barcode.GoodsActivity"
             android:theme="@style/AppTheme">
         </activity>
-        <activity android:name=".CartActivity"
+        <activity android:name=".barcode.CartActivity"
             android:theme="@style/AppTheme">
         </activity>
     </application>

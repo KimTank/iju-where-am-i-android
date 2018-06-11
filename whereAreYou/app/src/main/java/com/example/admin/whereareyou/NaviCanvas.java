@@ -8,6 +8,9 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+
+import com.example.admin.whereareyou.astar.Grid2d;
+
 import java.util.List;
 
 class NaviCanvas extends View {

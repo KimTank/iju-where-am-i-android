@@ -1,13 +1,15 @@
-package com.example.admin.whereareyou;
+package com.example.admin.whereareyou.barcode;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-public class GoodsActivity extends AppCompatActivity {
+import com.example.admin.whereareyou.R;
+
+public class CartActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_goods);
+        setContentView(R.layout.activity_cart);
     }
 }

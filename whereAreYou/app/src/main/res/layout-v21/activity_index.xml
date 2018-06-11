@@ -41,7 +41,7 @@
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="마트출입심사중.."
+                android:text="지금어디GO"
                 android:textAlignment="center"
                 android:textSize="24sp" />
 

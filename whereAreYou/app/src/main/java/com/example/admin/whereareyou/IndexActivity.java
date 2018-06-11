@@ -19,6 +19,7 @@ public class IndexActivity extends Activity{
         ImageView indexGIF = findViewById(R.id.indexGIF);
         GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(indexGIF);
         Glide.with(this).load(R.raw.index).into(imageViewTarget);
+        //로딩화면에서 메인화면(맵)으로 넘어가는곳
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -27,7 +28,7 @@ public class IndexActivity extends Activity{
                 startActivity(intent);   // Intent 시작
                 finish();
             }
-        }, 5000);  // 로딩화면 시간
+        }, 4000);  // 로딩화면 시간
     }
 
 }

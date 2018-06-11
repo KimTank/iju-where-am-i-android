@@ -36,15 +36,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/qrtext"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="TextView"
+                android:textAlignment="center"
                 android:textColor="?attr/colorBackgroundFloating"
                 android:textColorLink="@color/zxing_status_text"
                 android:textSize="36sp"

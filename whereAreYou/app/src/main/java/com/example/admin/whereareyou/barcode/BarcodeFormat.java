@@ -1,4 +1,4 @@
-package com.example.admin.whereareyou;
+package com.example.admin.whereareyou.barcode;
 
 public enum BarcodeFormat {
     /** Aztec 2D barcode format. */

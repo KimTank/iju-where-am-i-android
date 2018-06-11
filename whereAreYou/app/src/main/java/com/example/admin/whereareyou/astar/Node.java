@@ -1,4 +1,4 @@
-package com.example.admin.whereareyou;
+package com.example.admin.whereareyou.astar;
 
 import java.util.Set;
 
