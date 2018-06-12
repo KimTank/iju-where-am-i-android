@@ -70,7 +70,7 @@ class NaviCanvas extends View {
         Paint paintWall = new Paint();//벽
         Paint paintRoad = new Paint();//길
         //블럭나누는 설정
-        paintLine.setStrokeWidth(10);
+        paintLine.setStrokeWidth(0);
         paintLine.setColor(Color.BLACK);
         //전체길 설정
         paintMarker.setStrokeWidth(20);
@@ -102,15 +102,15 @@ class NaviCanvas extends View {
         int ylength = 15;
         //시험용 줄긋기 상하
         for (int i = 0; i < xlength; i++) {
-            canvas.drawLine(xmax * i / xlength, ymin, xmax * i / xlength, ymax, paintLine);
+            //canvas.drawLine(xmax * i / xlength, ymin, xmax * i / xlength, ymax, paintLine);
         }
         //시험용 줄긋기 좌우
         for (int i = 0; i < ylength; i++) {
-            canvas.drawLine(xmin, ymax * i / ylength, xmax, ymax * i / ylength, paintLine);
+            //canvas.drawLine(xmin, ymax * i / ylength, xmax, ymax * i / ylength, paintLine);
         }
         //Astar사용하기 위한 배열
         double[][] map = {
-                /////0  1  2  3  4  5  6  7  8  9 10 11 12
+                ////////0  1  2  3  4  5  6  7  8  9 10 11 12
                 /*0*/ { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 },//0
                 /*1*/ { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 },//1
                 /*2*/ { 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },//2
@@ -128,7 +128,6 @@ class NaviCanvas extends View {
                 /*14*/{ 3, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0 }///14
                 ////////0  1  2  3  4  5  6  7  8  9 10 11 12
         };
-
         Grid2d map2d = new Grid2d(map, false);
         //최소거리 뽑는거 logcat으로 확인
         //Log.d(TAG, "onDraw: " + map2d.findPath(1, 2, 10, 11));
@@ -165,12 +164,12 @@ class NaviCanvas extends View {
                 int ywall1 = ymax * i / ylength + ymax / ylength;
                 if (map[i][j] == 0) {
                     //map을 통해서 길인곳 제어
-                    canvas.drawPoint(xmarker, ymarker, paintMarker);
+                    //canvas.drawPoint(xmarker, ymarker, paintMarker);
                 } else if(map[i][j] == 1) {
                     canvas.drawPoint(xmarker, ymarker, paintRoad);
                 } else {
                     //아닌 곳 벽으로 제어
-                    canvas.drawLine(xwall, ywall, xwall1, ywall1, paintWall);
+                    //canvas.drawLine(xwall, ywall, xwall1, ywall1, paintWall);
                 }
             }
         }

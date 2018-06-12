@@ -28,7 +28,7 @@ public class IndexActivity extends Activity{
                 startActivity(intent);   // Intent 시작
                 finish();
             }
-        }, 4000);  // 로딩화면 시간
+        }, 0000);  // 로딩화면 시간
     }
 
 }
