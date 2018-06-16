@@ -1,9 +1,12 @@
 package com.example.admin.whereareyou;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -63,7 +66,6 @@ class NaviCanvas extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         String TAG = "tiger";
-
         //테스트용 paint 정의
         Paint paintLine = new Paint();//블럭나눔
         Paint paintMarker = new Paint();//마커
@@ -93,21 +95,21 @@ class NaviCanvas extends View {
         int xmax = getWidth();
         int ymax = getHeight();
         //시험용 네변 줄끗기
-        canvas.drawLine(xmin, ymin, xmin, ymax, paintLine);//좌변
+       /* canvas.drawLine(xmin, ymin, xmin, ymax, paintLine);//좌변
         canvas.drawLine(xmax, ymin, xmax, ymax, paintLine);//우변
         canvas.drawLine(xmin, ymin, xmax, ymin, paintLine);//상변
-        canvas.drawLine(xmin, ymax, xmax, ymax, paintLine);//하변
+        canvas.drawLine(xmin, ymax, xmax, ymax, paintLine);//하변*/
         //각 구역나누기위한 값
         int xlength = 13;
         int ylength = 15;
         //시험용 줄긋기 상하
-        for (int i = 0; i < xlength; i++) {
-            //canvas.drawLine(xmax * i / xlength, ymin, xmax * i / xlength, ymax, paintLine);
+       /* for (int i = 0; i < xlength; i++) {
+            canvas.drawLine(xmax * i / xlength, ymin, xmax * i / xlength, ymax, paintLine);
         }
         //시험용 줄긋기 좌우
         for (int i = 0; i < ylength; i++) {
-            //canvas.drawLine(xmin, ymax * i / ylength, xmax, ymax * i / ylength, paintLine);
-        }
+            canvas.drawLine(xmin, ymax * i / ylength, xmax, ymax * i / ylength, paintLine);
+        }*/
         //Astar사용하기 위한 배열
         double[][] map = {
                 ////////0  1  2  3  4  5  6  7  8  9 10 11 12
@@ -125,7 +127,7 @@ class NaviCanvas extends View {
                 /*11*/{ 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },//11
                 /*12*/{ 3, 0, 3, 3, 0, 3, 3, 3, 3, 0, 3, 3, 3 },//12
                 /*13*/{ 3, 0, 3, 3, 0, 3, 3, 3, 3, 0, 3, 3, 3 },//13
-                /*14*/{ 3, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0 }///14
+                /*14*/{ 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0 }///14
                 ////////0  1  2  3  4  5  6  7  8  9 10 11 12
         };
         Grid2d map2d = new Grid2d(map, false);
@@ -154,7 +156,7 @@ class NaviCanvas extends View {
          *   System.out.println();
         }*/
         //배열 사용하여 길인곳과 아닌곳 제어
-        for (int i = 0; i < ylength; i++) {
+        /*for (int i = 0; i < ylength; i++) {
             for (int j = 0; j < xlength; j++) {
                 int xmarker = xmax * j / xlength + xmax / xlength / 2;
                 int ymarker = ymax * i / ylength + ymax / ylength / 2;
@@ -164,15 +166,15 @@ class NaviCanvas extends View {
                 int ywall1 = ymax * i / ylength + ymax / ylength;
                 if (map[i][j] == 0) {
                     //map을 통해서 길인곳 제어
-                    //canvas.drawPoint(xmarker, ymarker, paintMarker);
+                    canvas.drawPoint(xmarker, ymarker, paintMarker);
                 } else if(map[i][j] == 1) {
                     canvas.drawPoint(xmarker, ymarker, paintRoad);
                 } else {
                     //아닌 곳 벽으로 제어
-                    //canvas.drawLine(xwall, ywall, xwall1, ywall1, paintWall);
+                    canvas.drawLine(xwall, ywall, xwall1, ywall1, paintWall);
                 }
             }
-        }
+        }*/
         //x와 y값을 조정하여 각 네모에 중앙 찾아주는 변수
         int xmarker = xmax * getsX() / xlength + xmax / xlength / 2;
         int ymarker = ymax *getsY() / ylength + ymax / ylength / 2;

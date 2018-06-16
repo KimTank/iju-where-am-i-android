@@ -31,7 +31,7 @@ public class CartAdapter extends ArrayAdapter<CartInfo> {
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(resource, null);
         ((ImageView)convertView.findViewById(R.id.list_image)).setImageResource(getItem(position).getList_image());
-        ((ImageView)convertView.findViewById(R.id.list_category)).setImageResource(getItem(position).getList_category());
+        ((TextView)convertView.findViewById(R.id.list_category)).setText(getItem(position).getList_category());
         ((TextView)convertView.findViewById(R.id.list_name)).setText(getItem(position).getList_name());
         ((TextView)convertView.findViewById(R.id.list_pricetext)).setText(getItem(position).getList_pricetext());
         return convertView;

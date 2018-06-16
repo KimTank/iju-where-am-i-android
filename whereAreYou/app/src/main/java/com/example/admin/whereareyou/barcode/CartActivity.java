@@ -23,17 +23,9 @@ public class CartActivity extends AppCompatActivity{
         //--------------------------------------
         listView = findViewById(R.id.listview);
         ArrayList<CartInfo> al = new ArrayList<>();
-       al.add(new CartInfo(R.drawable.bread_paris, R.drawable.bread_paris, "5,000", "빵쪼가리"));
-        al.add(new CartInfo(R.drawable.bread_paris, R.drawable.bread_paris, "5,000", "빵쪼가리"));
-        al.add(new CartInfo(R.drawable.bread_paris, R.drawable.bread_paris, "5,000", "빵쪼가리"));
-        al.add(new CartInfo(R.drawable.bread_paris, R.drawable.bread_paris, "5,000", "빵쪼가리"));
-        al.add(new CartInfo(R.drawable.bread_paris, R.drawable.bread_paris, "5,000", "빵쪼가리"));
-        al.add(new CartInfo(R.drawable.bread_paris, R.drawable.bread_paris, "5,000", "빵쪼가리"));
-        al.add(new CartInfo(R.drawable.bread_paris, R.drawable.bread_paris, "5,000", "빵쪼가리"));
-        al.add(new CartInfo(R.drawable.bread_paris, R.drawable.bread_paris, "5,000", "빵쪼가리"));
-        al.add(new CartInfo(R.drawable.bread_paris, R.drawable.bread_paris, "5,000", "빵쪼가리"));
-        al.add(new CartInfo(R.drawable.bread_paris, R.drawable.bread_paris, "5,000", "빵쪼가리"));
-        al.add(new CartInfo(R.drawable.bread_paris, R.drawable.bread_paris, "5,000", "빵쪼가리"));
+       /*al.add(new CartInfo(R.raw., "ㅇ", "5,000", "빵쪼가리"));
+        al.add(new CartInfo(R.drawable.bread_paris, "ㅇ", "5,000", "빵쪼가리"));
+        al.add(new CartInfo(R.drawable.bread_paris, "ㅇ", "5,000", "빵쪼가리"));*/
 
         CartAdapter adapter = new CartAdapter(this, R.layout.list_goods, al);
         listView.setAdapter(adapter);

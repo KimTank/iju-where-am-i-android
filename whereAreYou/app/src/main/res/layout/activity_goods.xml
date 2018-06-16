@@ -1,199 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:background="@drawable/background_shadow"
-    android:weightSum="10">
-    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e8e8e8"
+    android:orientation="vertical">
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="4">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_weight="2">
-
-            <ImageView
-                android:id="@+id/imageView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/qrlogo" />
-        </LinearLayout>
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/shoppingtext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="이름"
-                android:textAlignment="center"
-                android:textColor="?attr/colorBackgroundFloating"
-                android:textColorLink="@color/zxing_status_text"
-                android:textSize="40sp"
-                tools:layout_marginTop="10dp"
-                tools:textSize="30sp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:orientation="vertical"
-        android:weightSum="3">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:weightSum="1"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/bread_paris"
-                tools:layout_margin="10dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/wht"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_weight="2"
-            android:weightSum="3">
-
             <LinearLayout
+                android:id="@+id/wht"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:orientation="horizontal">
+
+                android:layout_weight="0.1"
+                android:background="#ffffff"
+                android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/category"
+                    android:id="@+id/goodsimage"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@mipmap/ic_launcher" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:weightSum="3"
-                android:orientation="vertical">
+                    android:layout_height="300dp"
+                    android:background="#ffffff"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
+                    android:layout_margin="10dp"
                     android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/goodscate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        android:text="카테고리"
+                        android:textSize="12dp" />
 
                     <TextView
                         android:id="@+id/goodsname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
+                        android:layout_margin="2dp"
                         android:text="상품이름"
-                        android:textAlignment="center"
-                        android:textColor="?attr/colorBackgroundFloating"
-                        android:textSize="20dp"
-                        tools:layout_marginLeft="10dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
+                        android:textColor="#000000"
+                        android:textSize="18dp" />
 
                     <TextView
                         android:id="@+id/goodsprice"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="상품가격"
-                        android:textAlignment="textEnd"
-                        android:textColor="?attr/colorBackgroundFloating"
-                        android:textSize="20dp" />
-                </LinearLayout>
+                        android:layout_margin="2dp"
+                        android:text="상품금액"
+                        android:textColor="#000000"
+                        android:textSize="18dp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/goodsexpalin"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="수량"
-                        android:textColor="?attr/colorBackgroundFloating"
-                        android:textSize="20dp"
-                        tools:layout_marginLeft="10dp"
-                        tools:layout_marginRight="10dp" />
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <EditText
+                            android:id="@+id/goodscount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.9"
+                            android:gravity="right"
+                            android:hint="수량 "
+                            android:inputType="number"
+                            android:maxEms="99"
+                            android:minEms="1"
+                            android:textSize="18dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"
+                            android:gravity="right"
+                            android:text="개"
+                            android:textColor="#000000"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        android:text="총 상품금액"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#000000"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:id="@+id/goodspricesum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        android:layout_marginBottom="300dp"
+                        android:text="5,000"
+                        android:textAlignment="viewEnd"
+                        android:textColor="#000000"
+                        android:textSize="25dp" />
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="4"
-        android:weightSum="2">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.9"
+                android:layout_gravity="bottom"
+                android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="20dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+                <Button
+                    android:id="@+id/infotocart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#DA4336"
+                    android:text="장바구니"
+                    android:textColor="#ffffff" />
 
-            <Button
-                android:id="@+id/infotocart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="장바구니" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
+
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/infotomap"
+            <ImageButton
+                android:id="@+id/goodsback"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="#00ff0000"
+                android:padding="10dp"
+                android:tint="#DA4336"
+                app:srcCompat="?attr/actionModeCloseDrawable" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="맵으로가기"
-                tools:layout_margin="20dp" />
+                android:orientation="horizontal"></LinearLayout>
+
+            <ImageButton
+                android:id="@+id/goodsshare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00ff0000"
+                android:gravity="right"
+                android:padding="10dp"
+                android:tint="#DA4336"
+                app:srcCompat="?attr/actionModeShareDrawable" />
         </LinearLayout>
-    </LinearLayout>
+
+
+    </FrameLayout>
 </LinearLayout>
+
+

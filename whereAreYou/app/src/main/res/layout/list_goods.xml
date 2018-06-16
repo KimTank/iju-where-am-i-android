@@ -4,155 +4,99 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:weightSum="1">
+    android:orientation="vertical"
+    android:padding="5dp"
+    android:background="#ffffff">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.7"
+
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/list_image"
-            android:layout_width="wrap_content"
-            android:layout_height="120dp"
-            android:layout_weight="1"
-            android:background="@drawable/drink_milk" />
+            android:layout_width="80dp"
+            android:layout_height="80dp"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:padding="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/list_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="카테고리"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/list_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="이름"
+                android:textColor="#000000"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/list_pricetext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="가격"
+                android:textColor="#000000"
+                android:textSize="12dp" />
+
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.3"
-        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:background="@drawable/textview_border"
         android:orientation="vertical"
-        android:weightSum="1">
+        android:padding="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.7"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/list_category"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.3"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/list_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="이름"
-                    android:textAlignment="center"
-                    android:textSize="24sp" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:weightSum="3"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/listprice"
+            <EditText
+                android:id="@+id/list_count"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:layout_weight="0.9"
+                android:gravity="right"
+                android:hint="1"
+                android:inputType="number"
+                android:maxEms="99"
+                android:minEms="1"
+                android:textSize="12dp" />
 
-                <TextView
-                    android:id="@+id/list_pricetext"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="가격"
-                    android:textAlignment="center"
-                    android:textSize="18sp" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:weightSum="2"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imageView3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@android:drawable/btn_dialog" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/list_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="수량"
-                        android:inputType="number"
-                        android:maxEms="99"
-                        android:minEms="1" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/list_sum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="합계"
-                    android:textAlignment="center"
-                    android:textSize="18sp" />
-            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:gravity="right"
+                android:text="개"
+                android:textColor="#000000"
+                android:textSize="12dp" />
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/list_pricetext2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="1dp"
+            android:text="합계"
+            android:textAlignment="viewEnd"
+            android:textColor="#000000"
+            android:textColorLink="@color/zxing_status_text"
+            android:textSize="15sp" />
     </LinearLayout>
 
 </LinearLayout>
