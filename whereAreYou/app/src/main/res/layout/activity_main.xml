@@ -4,490 +4,199 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    tools:layout_editor_absoluteY="25dp">
 
-    <LinearLayout
-        android:id="@+id/llll"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#d3e4ba"
-        android:orientation="vertical"
-        android:weightSum="8">
+        app:layout_constraintTop_toTopOf="@+id/container">
 
+        <RelativeLayout
+            android:id="@+id/container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:scrollbars="none|horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView2"
+            tools:ignore="MissingConstraints">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="4dp"
-            android:layout_marginTop="0dp"
-            android:layout_weight="7"
-            android:background="#d3e4ba"
-            android:orientation="horizontal">
+        </RelativeLayout>
 
+        <HorizontalScrollView
+            android:id="@+id/horizontalScrollView2"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="8dp"
+            android:fadeScrollbars="true"
+            android:scrollbars="none"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText"
+            tools:ignore="MissingConstraints">
 
-            <HorizontalScrollView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fadeScrollbars="true"
-                android:scrollbars="none">
+                android:layout_height="wrap_content">
 
-                <LinearLayout
+                <ImageButton
+                    android:id="@+id/go_bread"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/click_bread" />
 
-                    <LinearLayout
-                        android:layout_width="55dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                <ImageButton
+                    android:id="@+id/go_beer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/click_beer" />
 
-                        <ImageButton
-                            android:id="@+id/go_fruit"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/click_fruit" />
+                <ImageButton
+                    android:id="@+id/go_cow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/click_cow" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="야채" />
-                    </LinearLayout>
+                <ImageButton
+                    android:id="@+id/go_fish"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/click_fish" />
 
-                    <LinearLayout
-                        android:layout_width="55dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                <ImageButton
+                    android:id="@+id/go_drink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/click_drink" />
 
-                        <ImageButton
-                            android:id="@+id/go_carrot"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/click_carrot" />
+                <ImageButton
+                    android:id="@+id/go_snack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/click_snack" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="야채" />
-                    </LinearLayout>
+                <ImageButton
+                    android:id="@+id/go_honey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/click_honey" />
 
-                    <LinearLayout
-                        android:layout_width="55dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                <ImageButton
+                    android:id="@+id/go_milk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/click_milk" />
 
-                        <ImageButton
-                            android:id="@+id/go_nut"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/click_nut" />
+                <ImageButton
+                    android:id="@+id/go_tow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/click_tow" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="견과류" />
-                    </LinearLayout>
+                <ImageButton
+                    android:id="@+id/go_snow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/click_snow" />
 
-                    <LinearLayout
-                        android:layout_width="55dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                <ImageButton
+                    android:id="@+id/go_paper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/click_paper" />
 
-                        <ImageButton
-                            android:id="@+id/go_coffee"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/click_coffee" />
+                <ImageButton
+                    android:id="@+id/go_ice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/click_ice" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="커피/차" />
-                    </LinearLayout>
+                <ImageButton
+                    android:id="@+id/go_pot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/click_pot" />
 
-                    <LinearLayout
-                        android:layout_width="55dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                <ImageButton
+                    android:id="@+id/go_noodle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/click_noodle" />
 
-                        <ImageButton
-                            android:id="@+id/go_rice"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/click_rice" />
+                <ImageButton
+                    android:id="@+id/go_rice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/click_rice" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="베이킹" />
-                    </LinearLayout>
+                <ImageButton
+                    android:id="@+id/go_coffee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/click_coffee" />
 
-                    <LinearLayout
-                        android:layout_width="55dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                <ImageButton
+                    android:id="@+id/go_nut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/click_nut" />
 
-                        <ImageButton
-                            android:id="@+id/go_noodle"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/click_noodle" />
+                <ImageButton
+                    android:id="@+id/go_carrot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/click_carrot" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="라면" />
-                    </LinearLayout>
+                <ImageButton
+                    android:id="@+id/go_fruit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/click_fruit" />
 
-                    <LinearLayout
-                        android:layout_width="55dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageButton
-                            android:id="@+id/go_pot"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/click_pot" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="주방도구" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="55dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageButton
-                            android:id="@+id/go_ice"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/click_ice" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="빙과류" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="55dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageButton
-                            android:id="@+id/go_paper"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/click_paper" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="생활용품" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="55dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageButton
-                            android:id="@+id/go_snow"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/click_snow" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="냉동가공" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="55dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageButton
-                            android:id="@+id/go_tow"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/click_tow" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="욕실수납" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="55dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageButton
-                            android:id="@+id/go_milk"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/click_milk" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="유제품" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="55dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageButton
-                            android:id="@+id/go_honey"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/click_honey" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="소스" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="55dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageButton
-                            android:id="@+id/go_snack"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/click_snack" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="과자" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="55dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageButton
-                            android:id="@+id/go_drink"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/click_drink" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="음료" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="55dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageButton
-                            android:id="@+id/go_fish"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/click_fish" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="수산" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="55dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageButton
-                            android:id="@+id/go_cow"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/click_cow" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="축산" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="55dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageButton
-                            android:id="@+id/go_beer"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/click_beer" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="주류" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="55dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageButton
-                            android:id="@+id/go_bread"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/click_bread" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="빵집" />
-                    </LinearLayout>
-
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/cd_hidden"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:text="0"
+                    android:textColor="@color/zxing_transparent" />
 
 
-            </HorizontalScrollView>
+            </LinearLayout>
+        </HorizontalScrollView>
 
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/editText"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:id="@+id/container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scrollbars="none|horizontal">
-                <!--테스트하기위해서 필요한 버튼들-->
-                <!--<Button
-            android:id="@+id/set"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/qrScan"
-            android:layout_marginStart="45dp"
-            android:text="set" />
-
-        <Button
-            android:id="@+id/qrCreate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@+id/qrScan"
-            android:layout_marginEnd="117dp"
-            android:onClick="qrCreate"
-            android:text="qrCreate" />
-
-        <Button
-            android:id="@+id/qrScan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="20dp"
-            android:layout_marginEnd="20dp"
-            android:onClick="qrScan"
-            android:text="qrScan" />
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/qrCreate"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="176dp"
-            android:text="Button"
-            android:onClick="gocart"/>
-
-        <Button
-            android:id="@+id/button5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/qrScan"
-            android:layout_alignTop="@+id/button4"
-            android:text="Button"
-            android:onClick="gogoods"/>-->
-                <!--테스트용 버튼 끝-->
-
-            </RelativeLayout>
-        </LinearLayout>
-
-    </LinearLayout>
-<!-- 스크롤바 개발전 테스트 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/textview_border"
+            android:padding="10dp"
+            android:text = "목적지를 입력하세요"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/main_findme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="16dp"
             android:clickable="true"
             android:tint="#0000ff"
             app:backgroundTint="#ffffff"
             app:fab_size="mini"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@android:drawable/ic_menu_mylocation" />
 
         <com.github.clans.fab.FloatingActionMenu
@@ -526,15 +235,16 @@
             menu_shadowXOffset="1dp"
             menu_shadowYOffset="3dp"
             menu_showShadow="true"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
 
             android:layout_gravity=""
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <com.github.clans.fab.FloatingActionButton
                 android:id="@+id/menu_qrcreate"
@@ -567,6 +277,6 @@
                 app:fab_size="mini" />
 
         </com.github.clans.fab.FloatingActionMenu>
-    </LinearLayout>
 
+    </android.support.constraint.ConstraintLayout>
 </FrameLayout>

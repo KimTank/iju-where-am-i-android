@@ -2,58 +2,92 @@ package com.example.admin.whereareyou;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.ColorSpace;
+import android.speech.tts.TextToSpeech;
+import android.support.annotation.ColorRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.whereareyou.barcode.CartActivity;
 import com.example.admin.whereareyou.barcode.GoodsActivity;
 import com.example.admin.whereareyou.barcode.QrcreateActivity;
 import com.github.clans.fab.FloatingActionButton;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
+
+import java.util.Locale;
+import java.util.Random;
 
 import pl.polidea.view.ZoomView;
 
+import static android.speech.tts.TextToSpeech.ERROR;
+
 public class MainActivity extends AppCompatActivity {
-    String TAG = "tiger";
+
+    private String TAG = "tiger";
+    //확대 축소하게 해주는
+    private View v;
+    private ZoomView zoomView;
+    private RelativeLayout container;
+
     //버튼
     //이미지버튼 총 19개
-    ImageButton go_fruit, go_carrot, go_nut, go_coffee, go_rice, go_noodle, go_pot, go_ice, go_paper, go_snow, go_tow, go_milk, go_honey, go_snack, go_drink, go_fish, go_cow, go_beer, go_bread;
-    FloatingActionButton menu_qrCreate, menu_qrScan, menu_qrCart;
+    private ImageButton go_fruit, go_carrot, go_nut, go_coffee, go_rice, go_noodle, go_pot, go_ice, go_paper, go_snow, go_tow, go_milk, go_honey, go_snack, go_drink, go_fish, go_cow, go_beer, go_bread;
+    private FloatingActionButton menu_qrCreate, menu_qrScan, menu_qrCart;
+
     //길찾는 값보낼라고 캔버스객체생성
-    NaviCanvas nc;
+    private NaviCanvas nc;
+
+    //다이얼로그
+    private String loca;
+
+    //길안내 시작 취소 tts
+    private TextToSpeech myTTS;
+
+    //뒤로가기 두번눌렀을때 꺼지도록
+    BackPressedForFinish backPressedForFinish;
+
     //출발값 도착값(출발값은 나중에 비콘으로 찾을 수 있도록)
-    int startX, startY;
-    int goalX, goalY;
-    int[] startFind, goal1, goal2, goal3, goal4, goal5, goal6, goal7, goal8, goal9, goal10, goal11;
+    private int startX, startY;
+    private int goalX, goalY;
+    TextView editText;
 
     //--------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        //backPressedForFish사용하여 종료
+        backPressedForFinish = new BackPressedForFinish(this);
+        //myTTS객체
+        myTTS = new TextToSpeech(this, eventVoice);
+        //내비캔버스 객체생성
+        nc = findViewById(R.id.line);
         //-Floating버튼에 intent연결---------------------------------
         menu_qrCart = findViewById(R.id.menu_cart);
         menu_qrCreate = findViewById(R.id.menu_qrcreate);
         menu_qrScan = findViewById(R.id.menu_qrscan);
-        menu_qrCreate.setOnClickListener(event);
-        menu_qrScan.setOnClickListener(event);
-        menu_qrCart.setOnClickListener(event);
+        menu_qrCreate.setOnClickListener(eventFabButton);
+        menu_qrScan.setOnClickListener(eventFabButton);
+        menu_qrCart.setOnClickListener(eventFabButton);
         //-이미지버튼연결과 리스너--------------------------------------
         //과일, 야채, 견과류, 커피/fruit, carrot, nut, coffee/4개
         go_fruit = findViewById(R.id.go_fruit);
@@ -99,78 +133,200 @@ public class MainActivity extends AppCompatActivity {
         go_beer.setOnClickListener(event);
         go_bread.setOnClickListener(event);
 
-        //-------------------map기준이 [y][x]이므로 좀헷갈릴수도있겠으나 배열에 Y X순으로 대입
-        //출발값(출발값은 나중에 가장가까운 비콘으로 찾을 수 있도록 해야됨)
-        startX = 0; startY = 14;
-        startFind = new int[]{startY, startX};
-
-        //도착값(이게 맞는건지 모르겠음 매우 비효율적인데 나는 이것밖에 생각안남 ㅇ//창일아 자면안된다 잠에서 깨라
-        //goal1, 과일,견과
-        goalX = 3; goalY = 2;
-        goal1 = new int[]{goalY, goalX};
-
-        //goal2, 야채
-        goalX = 9; goalY = 2;
-        goal2 = new int[]{goalY, goalX};
-
-        //goal3, 커피
-        goalX = 6; goalY = 2;
-        goal3 = new int[]{goalY, goalX};
-
-        //goal4, 베이킹, 주방
-        goalX = 3; goalY = 5;
-        goal4 = new int[]{goalY, goalX};
-
-        //goal5, 라면, 빙과
-        goalX = 7; goalY = 5;
-        goal5 = new int[]{goalY, goalX};
-
-        //goal6, 수산, 축산
-        goalX = 11; goalY = 5;
-        goal6 = new int[]{goalY, goalX};
-
-        //goal7, 생활, 욕실
-        goalX = 3; goalY = 8;
-        goal7 = new int[]{goalY, goalX};
-
-        //goal8, 유제, 냉동
-        goalX = 7; goalY = 8;
-        goal8 = new int[]{goalY, goalX};
-
-        //goal9, 빵, 주류
-        goalX = 11; goalY = 11;
-        goal9 = new int[]{goalY, goalX};
-
-        //goal10, 소스
-        goalX = 4; goalY = 11;
-        goal10 = new int[]{goalY, goalX};
-
-        //goal11, 과자, 음료
-        goalX = 7; goalY = 11;
-        goal11 = new int[]{goalY, goalX};
+        //커스텀다이얼로그 사용하기위해서 객체생성
 
         //확대축소 가능하게해주는 ZoomView사용//만약 focus로 가는곳을 지정하지 못한다면 SurfaceView로 제어할수도 있는거 같음
-        View v = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.zoom_item, null, false);
+        v = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.zoom_item, null, false);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        ZoomView zoomView = new ZoomView(this);
+        zoomView = new ZoomView(this);
         zoomView.addView(v);
         zoomView.setLayoutParams(layoutParams);
         //zoomView.setMiniMapEnabled(true); // 좌측 상단 검은색 미니맵 설정
         //zoomView.setMiniMapCaption("확인창"); //미니 맵 내용
         //zoomView.setMiniMapCaptionSize(20); // 미니 맵 내용 글씨 크기 설정
         zoomView.setMaxZoom(2f); // 줌 Max 배율 설정  1f 로 설정하면 줌 안됩니다.
-        RelativeLayout container = findViewById(R.id.container);
+        container = findViewById(R.id.container);
         container.addView(zoomView);
         //-------------------------------------------------------------확대축소끝
         //-------------코드시작-------------------------------
-        nc = findViewById(R.id.line);//NaviCanvas객체
+        //-도착지 xy값
+        //-------------------map기준이 [y][x]이므로 좀헷갈릴수도있겠으나 배열에 Y X순으로 대입
+        //출발값(출발값은 나중에 가장가까운 비콘으로 찾을 수 있도록 해야됨)
+        startX = 0;
+        startY = 14;
+        //
+        nc = findViewById(R.id.line);
+        editText = findViewById(R.id.editText);
+        editText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        Log.d(TAG, "onTouch: 액션다운");
+                        editText.setTextColor(Color.RED);
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        Log.d(TAG, "onTouch: 액션무브");
+                        int r = new Random().nextInt(255);
+                        int g = new Random().nextInt(255);
+                        int b = new Random().nextInt(255);
+                        editText.setTextColor(Color.rgb(r,g,b));
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        Log.d(TAG, "onTouch: 액션업");
+                        Intent intent = new Intent(MainActivity.this, SearchList.class);
+                        startActivity(intent);
+                        break;
+                }
+                return false;
+            }
+        });
     }
-    //--------테스트코드끝-------------------------------
+
+    //이미지버튼 제어하는곳-------------------------------------------------------------------------------
     View.OnClickListener event = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-            //floating버튼 제어하는곳---------------------------------------------------------------------------------------------------    
+
+                //map[y][x]값 기준 도착지
+                //map[2][3]
+                //과일/1/goal1
+                case R.id.go_fruit:
+                    loca = "과일";
+                    goalX = 3;
+                    goalY = 2;
+                    break;
+                //견과/2/goal1
+                case R.id.go_nut:
+                    loca = "견과류";
+                    goalX = 3;
+                    goalY = 2;
+                    break;
+                //map[2][9]
+                //야채/3/goal2
+                case R.id.go_carrot:
+                    loca = "야채";
+                    goalX = 9;
+                    goalY = 2;
+                    break;
+                //map[2][6]
+                //커피/4/goal3
+                case R.id.go_coffee:
+                    loca = "커피";
+                    goalX = 6;
+                    goalY = 2;
+                    break;
+                //map[5][3]
+                //베이킹/5/goal4
+                case R.id.go_rice:
+                    loca = "베이킹";
+                    goalX = 3;
+                    goalY = 5;
+                    break;
+                //주방/6/goal4
+                case R.id.go_pot:
+                    loca = "주방도구";
+                    goalX = 3;
+                    goalY = 5;
+                    break;
+                //map[5][7]
+                //라면/7/goal5
+                case R.id.go_noodle:
+                    loca = "라면";
+                    goalX = 7;
+                    goalY = 5;
+                    break;
+                //빙과/8/goal5
+                case R.id.go_ice:
+                    loca = "빙과류";
+                    goalX = 7;
+                    goalY = 5;
+                    break;
+                //map[5][11]
+                //수산/9/goal6
+                case R.id.go_fish:
+                    loca = "수산";
+                    goalX = 11;
+                    goalY = 5;
+                    break;
+                //축산/10/goal6
+                case R.id.go_cow:
+                    loca = "축산";
+                    goalX = 11;
+                    goalY = 5;
+                    break;
+                //map[8][3]
+                //생활/11/goal7
+                case R.id.go_paper:
+                    loca = "생활용품";
+                    goalX = 3;
+                    goalY = 8;
+                    break;
+                //욕실/12/goal7
+                case R.id.go_tow:
+                    loca = "욕실수납";
+                    goalX = 3;
+                    goalY = 8;
+                    break;
+                //map[8][7]
+                //유제/13/goal8
+                case R.id.go_milk:
+                    loca = "유제품";
+                    goalX = 7;
+                    goalY = 8;
+                    break;
+                //냉동/14/goal8
+                case R.id.go_snow:
+                    loca = "냉동가공";
+                    goalX = 7;
+                    goalY = 8;
+                    break;
+                //map[11][11]
+                //빵/15/goal9
+                case R.id.go_bread:
+                    loca = "빵집";
+                    goalX = 11;
+                    goalY = 11;
+                    break;
+                //주류/16/goal9
+                case R.id.go_beer:
+                    loca = "주류";
+                    goalX = 11;
+                    goalY = 11;
+                    break;
+                //map[11][4]
+                //소스/17/goal10
+                case R.id.go_honey:
+                    loca = "소스";
+                    goalX = 4;
+                    goalY = 11;
+                    break;
+                //map[11][7]
+                //과자/18/goal11
+                case R.id.go_snack:
+                    loca = "과자";
+                    goalX = 7;
+                    goalY = 11;
+                    break;
+                //음료/19/goal11
+                case R.id.go_drink:
+                    loca = "음료";
+                    goalX = 7;
+                    goalY = 11;
+                    break;
+            }
+            show(loca, goalX, goalY);
+            nc.invalidate();
+        }
+    };
+
+    //Fab버튼 제어
+    View.OnClickListener eventFabButton = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                //floating버튼 제어하는곳---------------------------------------------------------------------------------------------------
                 //-----------------권한승인
                 case R.id.menu_qrcreate:
                     TelephonyManager tel = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
@@ -202,153 +358,73 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent2 = new Intent(MainActivity.this, CartActivity.class);
                     startActivity(intent2);
                     break;
-            //이미지버튼 제어하는곳-------------------------------------------------------------------------------
-                //map[y][x]값 기준 도착지
-                    //map[2][3]
-                        //과일/1/goal1
-                case R.id.go_fruit :
-                    Log.d(TAG, "onClick: 과일");
-                    nc.setsY(startFind[0]);nc.setsX(startFind[1]);
-                    nc.setgY(goal1[0]);nc.setgX(goal1[1]);
-                    nc.invalidate();
-                    break;
-                        //견과/2/goal1
-                case R.id.go_nut :
-                    Log.d(TAG, "onClick: 견과");
-                    nc.setsY(startFind[0]);nc.setsX(startFind[1]);
-                    nc.setgY(goal1[0]);nc.setgX(goal1[1]);
-                    nc.invalidate();
-                    break;
-                    //map[2][9]
-                        //야채/3/goal2
-                case R.id.go_carrot :
-                    Log.d(TAG, "onClick: 야채");
-                    nc.setsY(startFind[0]);nc.setsX(startFind[1]);
-                    nc.setgY(goal2[0]);nc.setgX(goal2[1]);
-                    nc.invalidate();
-                    break;
-                    //map[2][6]
-                        //커피/4/goal3
-                case R.id.go_coffee :
-                    Log.d(TAG, "onClick: 커피");
-                    nc.setsY(startFind[0]);nc.setsX(startFind[1]);
-                    nc.setgY(goal3[0]);nc.setgX(goal3[1]);
-                    nc.invalidate();
-                    break;
-                    //map[5][3]
-                        //베이킹/5/goal4
-                case R.id.go_rice :
-                    Log.d(TAG, "onClick: 베이킹");
-                    nc.setsY(startFind[0]);nc.setsX(startFind[1]);
-                    nc.setgY(goal4[0]);nc.setgX(goal4[1]);
-                    nc.invalidate();
-                    break;
-                        //주방/6/goal4
-                case R.id.go_pot :
-                    Log.d(TAG, "onClick: 주방");
-                    nc.setsY(startFind[0]);nc.setsX(startFind[1]);
-                    nc.setgY(goal4[0]);nc.setgX(goal4[1]);
-                    nc.invalidate();
-                    break;
-                    //map[5][7]
-                        //라면/7/goal5
-                case R.id.go_noodle :
-                    Log.d(TAG, "onClick: 라면");
-                    nc.setsY(startFind[0]);nc.setsX(startFind[1]);
-                    nc.setgY(goal5[0]);nc.setgX(goal5[1]);
-                    nc.invalidate();
-                    break;
-                        //빙과/8/goal5
-                case R.id.go_ice :
-                    Log.d(TAG, "onClick: 빙과");
-                    nc.setsY(startFind[0]);nc.setsX(startFind[1]);
-                    nc.setgY(goal5[0]);nc.setgX(goal5[1]);
-                    nc.invalidate();
-                    break;
-                   //map[5][11]
-                        //수산/9/goal6
-                case R.id.go_fish :
-                    Log.d(TAG, "onClick: 수산");
-                    nc.setsY(startFind[0]);nc.setsX(startFind[1]);
-                    nc.setgY(goal6[0]);nc.setgX(goal6[1]);
-                    nc.invalidate();
-                    break;
-                        //축산/10/goal6
-                case R.id.go_cow :
-                    Log.d(TAG, "onClick: 축산");
-                    nc.setsY(startFind[0]);nc.setsX(startFind[1]);
-                    nc.setgY(goal6[0]);nc.setgX(goal6[1]);
-                    nc.invalidate();
-                    break;
-                    //map[8][3]
-                        //생활/11/goal7
-                case R.id.go_paper :
-                    Log.d(TAG, "onClick: 생활");
-                    nc.setsY(startFind[0]);nc.setsX(startFind[1]);
-                    nc.setgY(goal7[0]);nc.setgX(goal7[1]);
-                    nc.invalidate();
-                    break;
-                        //욕실/12/goal7
-                case R.id.go_tow :
-                    Log.d(TAG, "onClick: 욕실");
-                    nc.setsY(startFind[0]);nc.setsX(startFind[1]);
-                    nc.setgY(goal7[0]);nc.setgX(goal7[1]);
-                    nc.invalidate();
-                    break;
-                    //map[8][7]
-                        //유제/13/goal8
-                case R.id.go_milk :
-                    Log.d(TAG, "onClick: 유제");
-                    nc.setsY(startFind[0]);nc.setsX(startFind[1]);
-                    nc.setgY(goal8[0]);nc.setgX(goal8[1]);
-                    nc.invalidate();
-                    break;
-                        //냉동/14/goal8
-                case R.id.go_snow :
-                    Log.d(TAG, "onClick: 냉동");
-                    nc.setsY(startFind[0]);nc.setsX(startFind[1]);
-                    nc.setgY(goal8[0]);nc.setgX(goal8[1]);
-                    nc.invalidate();
-                    break;
-                    //map[11][11]
-                        //빵/15/goal9
-                case R.id.go_bread :
-                    Log.d(TAG, "onClick: 빵");
-                    nc.setsY(startFind[0]);nc.setsX(startFind[1]);
-                    nc.setgY(goal9[0]);nc.setgX(goal9[1]);
-                    nc.invalidate();
-                    break;
-                        //주류/16/goal9
-                case R.id.go_beer :
-                    Log.d(TAG, "onClick: 주류");
-                    nc.setsY(startFind[0]);nc.setsX(startFind[1]);
-                    nc.setgY(goal9[0]);nc.setgX(goal9[1]);
-                    nc.invalidate();
-                    break;
-                    //map[11][4]
-                        //소스/17/goal10
-                case R.id.go_honey :
-                    Log.d(TAG, "onClick: 소스");
-                    nc.setsY(startFind[0]);nc.setsX(startFind[1]);
-                    nc.setgY(goal10[0]);nc.setgX(goal10[1]);
-                    nc.invalidate();
-                    break;
-                    //map[11][7]
-                        //과자/18/goal11
-                case R.id.go_snack :
-                    Log.d(TAG, "onClick: 과자");
-                    nc.setsY(startFind[0]);nc.setsX(startFind[1]);
-                    nc.setgY(goal11[0]);nc.setgX(goal11[1]);
-                    nc.invalidate();
-                    break;
-                        //음료/19/goal11
-                case R.id.go_drink :
-                    Log.d(TAG, "onClick: 음료");
-                    nc.setsY(startFind[0]);nc.setsX(startFind[1]);
-                    nc.setgY(goal11[0]);nc.setgX(goal11[1]);
-                    nc.invalidate();
-                    break;
             }
         }
     };
+
+    //다이얼로그 실행
+    final void show(String loca, int goalX, int goalY) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("길안내");
+        loca = loca + "코너로 길안내를 시작하겠습니다.";
+        builder.setMessage(loca);
+        builder.setPositiveButton("네", yesDialog);
+        builder.setNegativeButton("아니요", noDialog);
+        builder.show();
+        //말하자
+        myTTS.setPitch(1.0f);
+        myTTS.setSpeechRate(1.0f);
+        myTTS.speak(loca, TextToSpeech.QUEUE_FLUSH, null);
+    }
+
+    //다이얼로그 확인 눌렀을때 작동할수있는 함수
+    DialogInterface.OnClickListener yesDialog = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            nc.setsY(startY);
+            nc.setsX(startX);
+            nc.setgY(goalY);
+            nc.setgX(goalX);
+            nc.invalidate();
+            dialog.dismiss();
+        }
+    };
+    //다이얼로그 취소 눌렀을때 작동함
+    DialogInterface.OnClickListener noDialog = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            loca = "길안내를 취소하였습니다";
+            Toast.makeText(getApplicationContext(), loca, Toast.LENGTH_SHORT).show();
+            //말해라
+            myTTS.setPitch(1.0f);
+            myTTS.setSpeechRate(1.0f);
+            myTTS.speak(loca, TextToSpeech.QUEUE_FLUSH, null);
+            dialog.dismiss();
+        }
+    };
+
+    //음성출력되게해주는 함수
+    TextToSpeech.OnInitListener eventVoice = new TextToSpeech.OnInitListener() {
+        @Override
+        public void onInit(int status) {
+            if (status != ERROR) {
+                myTTS.setLanguage(Locale.KOREAN);
+            }
+        }
+    };
+
+    //음성출력 앱 종료시 날려줌
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        myTTS.stop();
+        myTTS.shutdown();
+    }
+
+    //뒤로가기 두번터치시 꺼지게
+
+    @Override
+    public void onBackPressed() {
+        backPressedForFinish.onBackPressed();
+    }
 }

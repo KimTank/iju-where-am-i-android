@@ -21,32 +21,93 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
             android:padding="5dp"
-            android:orientation="vertical">
+            android:weightSum="6">
 
-            <TextView
-                android:id="@+id/list_category"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="카테고리"
-                android:textSize="10dp" />
+                android:layout_height="match_parent"
+                android:layout_weight="1.5"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/list_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="이름"
-                android:textColor="#000000"
-                android:textSize="12dp" />
+                <TextView
+                    android:id="@+id/list_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="카테고리"
+                    android:textSize="10dp" />
 
-            <TextView
-                android:id="@+id/list_pricetext"
+                <TextView
+                    android:id="@+id/list_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="이름"
+                    android:textColor="#000000"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/list_pricetext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="가격"
+                    android:textColor="#000000"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/list_pricetext3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="창일아"
+                    android:textColor="#000000"
+                    android:textSize="12dp" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="가격"
-                android:textColor="#000000"
-                android:textSize="12dp" />
+                android:layout_height="match_parent"
+                android:layout_weight="4.5"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/list_count"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:hint="1"
+                        android:inputType="number"
+                        android:maxEms="99"
+                        android:minEms="1"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/infotocart2"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_weight="1"
+                        android:background="#DA4336"
+                        android:text="수량 수정"
+                        android:textColor="#ffffff" />
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>
@@ -56,47 +117,23 @@
         android:layout_height="wrap_content"
         android:background="@drawable/textview_border"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="5dp"
+        android:weightSum="2">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="1"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/list_count"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.9"
-                android:gravity="right"
-                android:hint="1"
-                android:inputType="number"
-                android:maxEms="99"
-                android:minEms="1"
-                android:textSize="12dp" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="2dp"
-                android:gravity="right"
-                android:text="개"
+                android:id="@+id/list_pricetext2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_weight="1"
+                android:padding="1dp"
+                android:text="합계"
+                android:textAlignment="viewEnd"
                 android:textColor="#000000"
-                android:textSize="12dp" />
+                android:textColorLink="@color/zxing_status_text"
+                android:textSize="15sp" />
 
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/list_pricetext2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="1dp"
-            android:text="합계"
-            android:textAlignment="viewEnd"
-            android:textColor="#000000"
-            android:textColorLink="@color/zxing_status_text"
-            android:textSize="15sp" />
     </LinearLayout>
 
 </LinearLayout>

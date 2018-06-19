@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
@@ -17,7 +18,8 @@ public class IndexActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index);
-        Log.d(TAG, "onCreate: 터짐");
+        LinearLayout ll = findViewById(R.id.indexlogo);
+        ll.setBackgroundResource(R.drawable.indextextlogo);
         //index화면에서 쓸 Glide->GIF넣어주는 곳
         ImageView indexGIF = findViewById(R.id.indexGIF);
         GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(indexGIF);
@@ -31,7 +33,7 @@ public class IndexActivity extends Activity{
                 startActivity(intent);   // Intent 시작
                 finish();
             }
-        }, 0000);  // 로딩화면 시간
+        }, 000);  // 로딩화면 시간
     }
 
 }
