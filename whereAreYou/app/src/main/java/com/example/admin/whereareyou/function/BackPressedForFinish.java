@@ -1,4 +1,4 @@
-package com.example.admin.whereareyou;
+package com.example.admin.whereareyou.function;
 import android.app.Activity;
 import android.content.Intent;
 import android.widget.Toast;

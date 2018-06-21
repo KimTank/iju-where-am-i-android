@@ -12,11 +12,52 @@
         android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="@+id/container">
 
+        <FrameLayout
+            android:id="@+id/mainframe"
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                android:id="@+id/edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="55dp"
+                android:layout_marginTop="9dp"
+                android:background="@drawable/textview_border"
+                android:hint="상품명을 입력하세요"
+                android:padding="10dp" />
+
+            <Button
+                android:id="@+id/btnsearch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="9dp"
+                android:layout_marginLeft="9dp"
+                android:layout_marginRight="55dp"
+                android:layout_marginTop="9dp"
+                android:background="#00ff0000" />
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center"
+                android:backgroundTint="#00ff0000"
+                android:hapticFeedbackEnabled="false"
+                android:tint="?attr/colorPrimaryDark"
+                app:srcCompat="@android:drawable/ic_menu_mylocation" />
+
+        </FrameLayout>
+
         <RelativeLayout
             android:id="@+id/container"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="8dp"
             android:scrollbars="none|horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -31,13 +72,12 @@
             android:layout_width="0dp"
             android:layout_height="55dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="8dp"
             android:fadeScrollbars="true"
             android:scrollbars="none"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText"
+            app:layout_constraintTop_toBottomOf="@+id/mainframe"
             tools:ignore="MissingConstraints">
 
             <LinearLayout
@@ -47,13 +87,13 @@
                 <ImageButton
                     android:id="@+id/go_bread"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@drawable/click_bread" />
 
                 <ImageButton
                     android:id="@+id/go_beer"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@drawable/click_beer" />
 
                 <ImageButton
@@ -65,7 +105,7 @@
                 <ImageButton
                     android:id="@+id/go_fish"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@drawable/click_fish" />
 
                 <ImageButton
@@ -158,46 +198,9 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/click_fruit" />
 
-                <TextView
-                    android:id="@+id/cd_hidden"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0"
-                    android:text="0"
-                    android:textColor="@color/zxing_transparent" />
-
 
             </LinearLayout>
         </HorizontalScrollView>
-
-        <TextView
-            android:id="@+id/editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/textview_border"
-            android:padding="10dp"
-            android:text = "목적지를 입력하세요"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/main_findme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="16dp"
-            android:layout_marginStart="16dp"
-            android:clickable="true"
-            android:tint="#0000ff"
-            app:backgroundTint="#ffffff"
-            app:fab_size="mini"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_mylocation" />
 
         <com.github.clans.fab.FloatingActionMenu
             android:id="@+id/menu"
@@ -242,7 +245,6 @@
 
             android:layout_gravity=""
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 

@@ -1,4 +1,4 @@
-package com.example.admin.whereareyou;
+package com.example.admin.whereareyou.function;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
+import com.example.admin.whereareyou.MainActivity;
+import com.example.admin.whereareyou.R;
 
 public class IndexActivity extends Activity{
     String TAG = "tiger";

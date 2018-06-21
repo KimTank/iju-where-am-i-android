@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:largeHeap="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".IndexActivity"
+        <activity android:name=".function.IndexActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,7 +31,7 @@
         <activity android:name=".barcode.CartActivity"
             android:theme="@style/AppTheme">
         </activity>
-        <activity android:name=".SearchList"
+        <activity android:name=".searchlist.SearchList"
             android:theme="@style/AppTheme">
         </activity>
     </application>

@@ -6,9 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.ColorSpace;
 import android.speech.tts.TextToSpeech;
-import android.support.annotation.ColorRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -25,12 +23,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.whereareyou.barcode.CartActivity;
 import com.example.admin.whereareyou.barcode.GoodsActivity;
 import com.example.admin.whereareyou.barcode.QrcreateActivity;
+import com.example.admin.whereareyou.function.BackPressedForFinish;
+import com.example.admin.whereareyou.searchlist.SearchList;
 import com.github.clans.fab.FloatingActionButton;
 
 import java.util.Locale;
@@ -55,6 +54,29 @@ public class MainActivity extends AppCompatActivity {
 
     //길찾는 값보낼라고 캔버스객체생성
     private NaviCanvas nc;
+    //맵string 선언
+    final private String fruit = "과일";
+    final private String nut = "견과류";
+    final private String ve = "야채";
+    final private String coffee = "커피";
+    final private String rice = "베이킹";
+    final private String pot = "주방도구";
+    final private String noodle = "라면";
+    final private String ice = "빙과류";
+    final private String fish = "수산";
+    final private String cow = "축산";
+    final private String paper = "생활용품";
+    final private String tow = "욕실수납";
+    final private String milk = "유제품";
+    final private String snow = "냉동가공";
+    final private String bread = "빵집";
+    final private String honey = "소스";
+    final private String alco = "주류";
+    final private String snack = "과자";
+    final private String drink = "음료";
+    //search한 값 넘길라고
+    private final static int REQUEST_TEST = 1;
+    private int btnDe = 0;
 
     //다이얼로그
     private String loca;
@@ -68,13 +90,15 @@ public class MainActivity extends AppCompatActivity {
     //출발값 도착값(출발값은 나중에 비콘으로 찾을 수 있도록)
     private int startX, startY;
     private int goalX, goalY;
-    TextView editText;
+    private EditText editText;
+    private Button btn;
 
     //--------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         //backPressedForFish사용하여 종료
         backPressedForFinish = new BackPressedForFinish(this);
         //myTTS객체
@@ -132,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
         go_bread = findViewById(R.id.go_bread);
         go_beer.setOnClickListener(event);
         go_bread.setOnClickListener(event);
-
         //커스텀다이얼로그 사용하기위해서 객체생성
 
         //확대축소 가능하게해주는 ZoomView사용//만약 focus로 가는곳을 지정하지 못한다면 SurfaceView로 제어할수도 있는거 같음
@@ -156,26 +179,19 @@ public class MainActivity extends AppCompatActivity {
         startY = 14;
         //
         nc = findViewById(R.id.line);
-        editText = findViewById(R.id.editText);
-        editText.setOnTouchListener(new View.OnTouchListener() {
+        editText = findViewById(R.id.edittext);
+        btn = findViewById(R.id.btnsearch);
+        btn.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        Log.d(TAG, "onTouch: 액션다운");
-                        editText.setTextColor(Color.RED);
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        Log.d(TAG, "onTouch: 액션무브");
-                        int r = new Random().nextInt(255);
-                        int g = new Random().nextInt(255);
-                        int b = new Random().nextInt(255);
-                        editText.setTextColor(Color.rgb(r,g,b));
+                        btn.setBackgroundColor(Color.argb(75, 255, 0, 0));
                         break;
                     case MotionEvent.ACTION_UP:
-                        Log.d(TAG, "onTouch: 액션업");
+                        btn.setBackgroundColor(Color.argb(0, 255, 0, 0));
                         Intent intent = new Intent(MainActivity.this, SearchList.class);
-                        startActivity(intent);
+                        startActivityForResult(intent, REQUEST_TEST);
                         break;
                 }
                 return false;
@@ -183,139 +199,158 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //search결과 들고와서 제어한다 길그린다 아아아아아
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_TEST) {
+            if (resultCode == RESULT_OK) {
+                btnDe = 1;
+                String loca = data.getStringExtra("sv");
+                int[] goalPoint = data.getIntArrayExtra("gp");
+                goalX = goalPoint[0];
+                goalY = goalPoint[1];
+                Log.d(TAG, "onClick: " + goalX + "메인 값받는곳" + goalY);
+                show(loca, goalX, goalY);
+            } else {   // RESULT_CANCEL
+            }
+        }
+    }
+
     //이미지버튼 제어하는곳-------------------------------------------------------------------------------
     View.OnClickListener event = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-
                 //map[y][x]값 기준 도착지
                 //map[2][3]
                 //과일/1/goal1
                 case R.id.go_fruit:
-                    loca = "과일";
+                    loca = fruit;
                     goalX = 3;
                     goalY = 2;
                     break;
                 //견과/2/goal1
                 case R.id.go_nut:
-                    loca = "견과류";
+                    loca = nut;
                     goalX = 3;
                     goalY = 2;
                     break;
                 //map[2][9]
                 //야채/3/goal2
                 case R.id.go_carrot:
-                    loca = "야채";
+                    loca = ve;
                     goalX = 9;
                     goalY = 2;
                     break;
                 //map[2][6]
                 //커피/4/goal3
                 case R.id.go_coffee:
-                    loca = "커피";
+                    loca = coffee;
                     goalX = 6;
                     goalY = 2;
                     break;
                 //map[5][3]
                 //베이킹/5/goal4
                 case R.id.go_rice:
-                    loca = "베이킹";
+                    loca = rice;
                     goalX = 3;
                     goalY = 5;
                     break;
                 //주방/6/goal4
                 case R.id.go_pot:
-                    loca = "주방도구";
+                    loca = pot;
                     goalX = 3;
                     goalY = 5;
                     break;
                 //map[5][7]
                 //라면/7/goal5
                 case R.id.go_noodle:
-                    loca = "라면";
+                    loca = noodle;
                     goalX = 7;
                     goalY = 5;
                     break;
                 //빙과/8/goal5
                 case R.id.go_ice:
-                    loca = "빙과류";
+                    loca = ice;
                     goalX = 7;
                     goalY = 5;
                     break;
                 //map[5][11]
                 //수산/9/goal6
                 case R.id.go_fish:
-                    loca = "수산";
+                    loca = fish;
                     goalX = 11;
                     goalY = 5;
                     break;
                 //축산/10/goal6
                 case R.id.go_cow:
-                    loca = "축산";
+                    loca = cow;
                     goalX = 11;
                     goalY = 5;
                     break;
                 //map[8][3]
                 //생활/11/goal7
                 case R.id.go_paper:
-                    loca = "생활용품";
+                    loca = paper;
                     goalX = 3;
                     goalY = 8;
                     break;
                 //욕실/12/goal7
                 case R.id.go_tow:
-                    loca = "욕실수납";
+                    loca = tow;
                     goalX = 3;
                     goalY = 8;
                     break;
                 //map[8][7]
                 //유제/13/goal8
                 case R.id.go_milk:
-                    loca = "유제품";
+                    loca = milk;
                     goalX = 7;
                     goalY = 8;
                     break;
                 //냉동/14/goal8
                 case R.id.go_snow:
-                    loca = "냉동가공";
+                    loca = snow;
                     goalX = 7;
                     goalY = 8;
                     break;
                 //map[11][11]
                 //빵/15/goal9
                 case R.id.go_bread:
-                    loca = "빵집";
+                    loca = bread;
                     goalX = 11;
                     goalY = 11;
                     break;
                 //주류/16/goal9
                 case R.id.go_beer:
-                    loca = "주류";
+                    loca = alco;
                     goalX = 11;
                     goalY = 11;
                     break;
                 //map[11][4]
                 //소스/17/goal10
                 case R.id.go_honey:
-                    loca = "소스";
+                    loca = honey;
                     goalX = 4;
                     goalY = 11;
                     break;
                 //map[11][7]
                 //과자/18/goal11
                 case R.id.go_snack:
-                    loca = "과자";
+                    loca = snack;
                     goalX = 7;
                     goalY = 11;
                     break;
                 //음료/19/goal11
                 case R.id.go_drink:
-                    loca = "음료";
+                    loca = drink;
                     goalX = 7;
                     goalY = 11;
                     break;
             }
+            btnDe = 0;
             show(loca, goalX, goalY);
             nc.invalidate();
         }
@@ -365,8 +400,13 @@ public class MainActivity extends AppCompatActivity {
     //다이얼로그 실행
     final void show(String loca, int goalX, int goalY) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("길안내");
-        loca = loca + "코너로 길안내를 시작하겠습니다.";
+        if (btnDe == 0) {
+            builder.setTitle("길안내");
+            loca = loca + "코너로 길안내를 시작하겠습니다.";
+        } else {
+            builder.setTitle("상품 길안내");
+            loca = "상품(" + loca + ")으로 길안내를 시작하겠습니다";
+        }
         builder.setMessage(loca);
         builder.setPositiveButton("네", yesDialog);
         builder.setNegativeButton("아니요", noDialog);

@@ -16,7 +16,7 @@ import com.example.admin.whereareyou.astar.Grid2d;
 
 import java.util.List;
 
-class NaviCanvas extends View {
+public class NaviCanvas extends View {
     int sX, sY, gX, gY;
 
     public int getsX() {
@@ -49,10 +49,6 @@ class NaviCanvas extends View {
 
     public void setgY(int gY) {
         this.gY = gY;
-    }
-
-    public NaviCanvas(Context context) {
-        super(context);
     }
 
     public NaviCanvas(Context context, @Nullable AttributeSet attrs) {
