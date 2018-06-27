@@ -1,6 +1,7 @@
 package com.example.admin.whereareyou;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,7 +34,6 @@ import com.example.admin.whereareyou.searchlist.SearchList;
 import com.github.clans.fab.FloatingActionButton;
 
 import java.util.Locale;
-import java.util.Random;
 
 import pl.polidea.view.ZoomView;
 
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     final private String drink = "음료";
     //search한 값 넘길라고
     private final static int REQUEST_TEST = 1;
-    private int btnDe = 0;
+    private int searchSession = 0;
 
     //다이얼로그
     private String loca;
@@ -91,20 +91,29 @@ public class MainActivity extends AppCompatActivity {
     private int startX, startY;
     private int goalX, goalY;
     private EditText editText;
-    private Button btn;
+
+    //상품찾는버튼
+    private Button btnSearch;
+    private  ImageButton btnFind;
 
     //--------------------------------------------
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //내위치 찾는 버튼
+        btnFind = findViewById(R.id.btnfind);
 
         //backPressedForFish사용하여 종료
         backPressedForFinish = new BackPressedForFinish(this);
+
         //myTTS객체
         myTTS = new TextToSpeech(this, eventVoice);
+
         //내비캔버스 객체생성
         nc = findViewById(R.id.line);
+
         //-Floating버튼에 intent연결---------------------------------
         menu_qrCart = findViewById(R.id.menu_cart);
         menu_qrCreate = findViewById(R.id.menu_qrcreate);
@@ -177,19 +186,35 @@ public class MainActivity extends AppCompatActivity {
         //출발값(출발값은 나중에 가장가까운 비콘으로 찾을 수 있도록 해야됨)
         startX = 0;
         startY = 14;
-        //
-        nc = findViewById(R.id.line);
+
+        //내위치찾는곳
+        btnFind.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN :
+                        btnFind.setAlpha(0.8f);
+                        break;
+                    case MotionEvent.ACTION_UP :
+                        btnFind.setAlpha(1.0f);
+                        break;
+                }
+                return false;
+            }
+        });
+
+        //상품명 검색하는 곳
         editText = findViewById(R.id.edittext);
-        btn = findViewById(R.id.btnsearch);
-        btn.setOnTouchListener(new View.OnTouchListener() {
+        btnSearch = findViewById(R.id.btnsearch);
+        btnSearch.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        btn.setBackgroundColor(Color.argb(75, 255, 0, 0));
+                        btnSearch.setBackgroundColor(Color.argb(75, 255, 0, 0));
                         break;
                     case MotionEvent.ACTION_UP:
-                        btn.setBackgroundColor(Color.argb(0, 255, 0, 0));
+                        btnSearch.setBackgroundColor(Color.argb(0, 255, 0, 0));
                         Intent intent = new Intent(MainActivity.this, SearchList.class);
                         startActivityForResult(intent, REQUEST_TEST);
                         break;
@@ -206,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == REQUEST_TEST) {
             if (resultCode == RESULT_OK) {
-                btnDe = 1;
+                searchSession = 1;
                 String loca = data.getStringExtra("sv");
                 int[] goalPoint = data.getIntArrayExtra("gp");
                 goalX = goalPoint[0];
@@ -350,7 +375,7 @@ public class MainActivity extends AppCompatActivity {
                     goalY = 11;
                     break;
             }
-            btnDe = 0;
+            searchSession = 0;
             show(loca, goalX, goalY);
             nc.invalidate();
         }
@@ -400,7 +425,7 @@ public class MainActivity extends AppCompatActivity {
     //다이얼로그 실행
     final void show(String loca, int goalX, int goalY) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        if (btnDe == 0) {
+        if (searchSession == 0) {
             builder.setTitle("길안내");
             loca = loca + "코너로 길안내를 시작하겠습니다.";
         } else {
@@ -462,7 +487,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //뒤로가기 두번터치시 꺼지게
-
     @Override
     public void onBackPressed() {
         backPressedForFinish.onBackPressed();
